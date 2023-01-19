@@ -1,0 +1,30 @@
+pwd,	Print working directory	,3
+ls,	List files and directories in current working directory	,3
+cd,	Change current working directory	,3
+mkdir,	Create a directory	,3
+rmdir,	Delete a directory	,3
+rm,	Delete a file	,3
+cp,	Copy	,3
+mv,	Move a file	,3
+ssh,	,3
+scp,	,3
+man,	,3
+g++,	,3
+gcc,	,3
+make,		,3
+ps,	,3
+kill,		,3
+top,	,3
+who,	,3
+chmod,		,3
+cat,	,3
+alias,		,3
+chown,		,3
+df,	,3
+grep,		,3
+echo,		,3
+find,		,3
+clear,		,3
+diff,		,3
+env,		,3
+free,		,3
