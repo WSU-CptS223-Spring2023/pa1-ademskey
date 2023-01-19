@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 
+#include "Data.h"
+
 //using statements
 using std::string;
 
@@ -22,13 +24,13 @@ public:
 //insert
     void insert();
 //delete
-    //data delete();
+    Data depopulate();
 //find node
-    //data find(string command);
+    Data find(string command);
 
 
 private:
-// Node* pNext;
+    Node<Data>* pNext;
 
 };
 
