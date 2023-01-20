@@ -18,19 +18,19 @@ class List
 {
 public:
 //constructor
-    List();
+    List(Node<Data>* pHead = nullptr);
 //destructor
     ~List();
 //insert
-    void insert();
+    void insert(Data newdata);
 //delete
     Data depopulate();
 //find node
     Data find(string command);
 
-
 private:
-    Node<Data>* pNext;
+//pointer to next in data
+    Node<Data>* pHead;
 
 };
 
