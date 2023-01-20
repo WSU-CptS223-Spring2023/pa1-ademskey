@@ -9,28 +9,27 @@
 #include <iostream>
 #include <string>
 
-#include "Data.h"
-
 //using statements
 using std::string;
 
+template <typename nodetype>
 class List
 {
 public:
 //constructor
-    List(Node<Data>* pHead = nullptr);
+    List(Node<nodetype>* pHead = nullptr);
 //destructor
     ~List();
 //insert
-    void insert(Data newdata);
+    void insert(nodetype newdata);
 //delete
-    Data depopulate();
+    nodetype depopulate();
 //find node
-    Data find(string command);
+    nodetype find(string command);
 
 private:
 //pointer to next in data
-    Node<Data>* pHead;
+    Node<nodetype>* pHead;
 
 };
 

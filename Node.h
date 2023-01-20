@@ -1,16 +1,16 @@
 
 #include "list.h"
-#include "data.h"
 
 template <class nodetype>
 class Node
 {
 public:
 //constructor
-    Node(string command = "No input", string annswer = "No input", int points = 0)
-    Node(Data newdata)
+    //Node(std::string command = "No input", std::string annswer = "No input", int points = 0);
+    Node(const nodetype newdata)
     {
         this -> data = newdata;
+        pNext = nullptr;
     }
 //destructor
     ~Node();
@@ -18,10 +18,10 @@ public:
     void setpNext(Node<nodetype>* newptr)
     {this -> pNext = newwptr}
 //getter
-Node<nodetype>* getpNext()
-{
+    Node<nodetype>* getpNext()
+    {   
     return this->pNext;
-}
+    }
 
 private:
     nodetype data;

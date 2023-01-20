@@ -16,6 +16,8 @@
 
 #include "list.h"
 #include "game.h"
+#include "Node.h"
+#include "Data.h"
 
 using std::cout;
 using std::endl;

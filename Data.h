@@ -1,6 +1,8 @@
 
 #include "list.h"
 
+using std::string;
+
 class Data
 {
 public:
