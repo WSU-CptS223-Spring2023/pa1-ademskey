@@ -1,3 +1,3 @@
 
-#include "main.cpp"
+#include "game.hpp"
 

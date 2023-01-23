@@ -1,4 +1,6 @@
-// Name: Linux Commands Quiz Game (PA 1)
+// 
+
+//Name: Linux Commands Quiz Game (PA 1)
 // Author: Adam Caudle
 // Date Created: 1/13/2023
 // Preconditions: None (know how to work a terminal maybey)
@@ -14,20 +16,20 @@
 // run into time complexity problems when searching through them for specific data. This means while they
 // are versitile that they should only be used in the correct circumstances to avoid inneficient code.
 
-#include "Data.h"
-#include "Node.h"
-#include "list.h"
-#include "game.h"
+#include "data.hpp"
+#include "node.hpp"
+#include "list.hpp"
+#include "game.hpp"
 
 
 using std::cout;
 using std::endl;
 
-Game gamemenu;
+//Game gamemenu;
 
 int main(void)
 {
-    int menuval = 0;
+    int menuval = 7;
 
     while(menuval != 7) //while 7 (exit number) hasnt been entered
     {
@@ -50,6 +52,7 @@ int main(void)
                 //Display all commands
             case 7:
                 //save and exit
+                return 0;
             
             default:
                 cout << "Valid menu value not entered, try again" << endl;
@@ -57,5 +60,3 @@ int main(void)
     }
     return 0; //return zero if main has executed succesfully
 }
-
-//mericio
