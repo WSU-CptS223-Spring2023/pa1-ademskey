@@ -16,7 +16,7 @@ public:
     ~Node();
 //setters
     void setpNext(Node<nodetype>* newptr)
-    {this -> pNext = newwptr}
+    {this -> pNext = newptr;}
 //getter
     Node<nodetype>* getpNext()
     {   

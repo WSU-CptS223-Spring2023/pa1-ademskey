@@ -17,7 +17,10 @@ class List
 {
 public:
 //constructor
-    List(Node<nodetype>* pHead = nullptr);
+    List(Node<nodeype>* pHead)
+    {
+        this -> pHead = nullptr;
+    }
 //destructor
     ~List();
 //insert

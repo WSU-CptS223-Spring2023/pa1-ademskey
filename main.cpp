@@ -14,10 +14,11 @@
 // run into time complexity problems when searching through them for specific data. This means while they
 // are versitile that they should only be used in the correct circumstances to avoid inneficient code.
 
+#include "Data.h"
+#include "Node.h"
 #include "list.h"
 #include "game.h"
-#include "Node.h"
-#include "Data.h"
+
 
 using std::cout;
 using std::endl;
