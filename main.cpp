@@ -25,21 +25,22 @@
 using std::cout;
 using std::endl;
 
-//Game gamemenu;
+Game gamemenu;
 
 int main(void)
 {
-    int menuval = 7;
+    //print off the rules
+    gamemenu.printmenu();
 
-    while(menuval != 7) //while 7 (exit number) hasnt been entered
+    while(gamemenu.getmenuval() != 7) //while 7 (exit number) hasnt been entered
     {
         //print menu
         // printmenu();
-        switch(menuval)
+        switch(gamemenu.getmenuval())
         {
             case 1:
                 //Game Rules
-                // printrules();
+                gamemenu.printrules();
             case 2:
                 //Play new game
             case 3:
