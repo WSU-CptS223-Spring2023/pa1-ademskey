@@ -1,30 +1,30 @@
-pwd,	Print working directory	,3
-ls,	List files and directories in current working directory	,3
-cd,	Change current working directory	,3
-mkdir,	Create a directory	,3
-rmdir,	Delete a directory	,3
-rm,	Delete a file	,3
-cp,	Copy	,3
+pwd, Print working directory	,3
+ls, List files and directories in current working directory	,3
+cd, Change current working directory	,3
+mkdir, Create a directory	,3
+rmdir, Delete a directory	,3
+rm, Delete a file,3
+cp, Copy,3
 mv,	Move a file	,3
-ssh,	,3
-scp,	,3
-man,	,3
-g++,	,3
-gcc,	,3
-make,		,3
-ps,	,3
-kill,		,3
-top,	,3
-who,	,3
-chmod,		,3
-cat,	,3
-alias,		,3
-chown,		,3
-df,	,3
-grep,		,3
-echo,		,3
-find,		,3
-clear,		,3
-diff,		,3
-env,		,3
-free,		,3
+ssh, provides a secure encrypted connection between two hosts over an insecure network,3
+scp, copies files or directories between a local and a remote system or between two remote systems ,3
+man, built-in manual for using Linux commands ,3
+g++, GNU c++ compiler invocation command,3
+gcc, GNU Compiler Collections which is used to compile mainly C and C++ language ,3
+make, determine which pieces of a large program need to be recompiled and issue the commands to recompile them ,3
+ps,	(Proccessing Status) viewing information related with the processes on a system ,3
+kill, end a process,3
+top,  live view of the processes and all the information accompanying those processes ,3
+who, tool print information about users who are currently logged in ,3
+chmod, used to change the access permissions of files and directories ,3
+cat,  print the content of a file onto the standard output stream ,3
+alias, a shortcut that references a command ,3
+chown, changes the owner of the file or directory ,3
+df,	displays the amount of disk space available on the filesystem ,3
+grep,  searching for text and strings that users define in a given file ,3
+echo, used to display line of text/string that are passed as an argument ,3
+find, locates files based on some user-specified criteria and prints the pathname ,3
+clear, bring the command line on top of the computer terminal ,3
+diff, compare two files line by line and display the difference between them ,3
+env, print a list of the current environment variables ,3
+free, outputs a summary of RAM usage, including total, used, free, shared, and available memory ,3

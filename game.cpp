@@ -9,6 +9,7 @@ Game::Game(int input)
 { 
     this -> menuval = input;
 }
+
 Game::~Game()
 {
     //inside destructor
@@ -17,15 +18,15 @@ Game::~Game()
 void Game::printmenu()
 {
     cout << "**** Welcome to the Linux Command Quiz!" << endl;
-    cout << "1. " << endl;
-    cout << "2. " << endl;
-    cout << "3. " << endl;
-    cout << "4. " << endl;
-    cout << "5. " << endl;
-    cout << "6. " << endl;
-    cout << "7. " << endl;
+    cout << "1. Print Rules" << endl;
+    cout << "2. Play New Game" << endl;
+    cout << "3. Load Previous Game" << endl;
+    cout << "4. Add Command" << endl;
+    cout << "5. Remove Command" << endl;
+    cout << "6. Display All Commands" << endl;
+    cout << "7. Save and Exit" << endl;
     cin >> this -> menuval;
-
+    return;
 }
 
 void Game::printrules()
@@ -38,4 +39,43 @@ void Game::printrules()
     cout << "Negative numbers are possible, and answers will be saved under username" << endl;
     cout << "Try your best and learn well!" << endl;
     return;
+}
+
+void Game::printlist(List<Data> list)
+{
+
+}
+
+void Game::filllist(List<Data> list) //will pull in lines and put them into a data var and insert until no lines
+{
+    this -> infile.open("commands.csv");
+    Data tempdata;
+    string tempstring;
+    string token;
+    
+    if(this->infile.is_open())
+    {
+         while(getline(this -> infile, tempstring))
+        {
+            //get line and parce information into data class
+            //code from my 122 pa 7 referenced for parcing data without strtok (as a string)
+
+            //get command
+            token = tempstring.substr(0, tempstring.find(',')); //create a substring
+            tempstring.erase(0, tempstring.find(',') + 1); //erase all content until token
+            tempdata.setcommand(token); //set command as string token derived from tempstring
+
+            //get answer
+            token = tempstring.substr(0, tempstring.find(',')); //create substring
+            tempstring.erase(0, tempstring.find(',') + 1); //erase string content until ,
+            tempdata.setanswer(token); //set the answer as the substring token gained
+
+            //get points
+            token = tempstring.substr(0, tempstring.find(',')); //create substring
+            tempstring.erase(0, tempstring.find('\n') + 1); //erase rest of content
+            tempdata.setpoints(stoi(token)); //set as integer interpetation of token
+
+            this -> commandslist.insert(tempdata);
+        }
+    }
 }

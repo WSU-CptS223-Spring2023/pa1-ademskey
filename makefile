@@ -8,7 +8,7 @@ prog: main.o game.o  data.o
 main.o: main.cpp node.hpp game.cpp list.hpp data.cpp
 	g++ -c main.cpp
 
-game.o: game.cpp game.hpp list.hpp
+game.o: game.cpp game.hpp list.hpp data.hpp
 	g++ -c game.cpp 
 
 data.o: data.cpp data.hpp list.hpp
