@@ -17,6 +17,8 @@ Game::~Game()
 
 void Game::printmenu()
 {
+    system("cls");
+    system("pause");
     cout << "**** Welcome to the Linux Command Quiz!" << endl;
     cout << "1. Print Rules" << endl;
     cout << "2. Play New Game" << endl;
@@ -26,7 +28,6 @@ void Game::printmenu()
     cout << "6. Display All Commands" << endl;
     cout << "7. Save and Exit" << endl;
     cin >> this -> menuval;
-    return;
 }
 
 void Game::printrules()
@@ -38,12 +39,19 @@ void Game::printrules()
     cout << "The points for each answer will be listed, if correct will be added to toal. If not will be subtracted" << endl;
     cout << "Negative numbers are possible, and answers will be saved under username" << endl;
     cout << "Try your best and learn well!" << endl;
-    return;
 }
 
 void Game::printlist(List<Data> list)
 {
+    Node<Data>* pCur = list.getpHead();
 
+    while(pCur != nullptr)
+    {
+
+        cout << pCur -> getdata() << endl;;
+        pCur = pCur -> getpnext();
+    }
+    return;
 }
 
 void Game::filllist(List<Data> list) //will pull in lines and put them into a data var and insert until no lines

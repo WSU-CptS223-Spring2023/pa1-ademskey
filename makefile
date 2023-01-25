@@ -3,16 +3,16 @@
 # This is a very basic form of a makefile! We will add more to our makefiles in the future!
 
 prog: main.o game.o  data.o
-	g++ main.o game.o data.o -o ourProg
+	g++ -g main.o game.o data.o -o ourProg
 
 main.o: main.cpp node.hpp game.cpp list.hpp data.cpp
-	g++ -c main.cpp
+	g++ -g -c main.cpp
 
 game.o: game.cpp game.hpp list.hpp data.hpp
-	g++ -c game.cpp 
+	g++ -g -c game.cpp 
 
 data.o: data.cpp data.hpp list.hpp
-	g++ -c data.cpp
+	g++ -g -c data.cpp
 
 clean: 
 	-rm *.o

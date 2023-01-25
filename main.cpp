@@ -36,20 +36,21 @@ using std::ofstream;
 //menu game + file variables
 Game gamemenu;
 
+
 int main(void)
 {
-    //print off the rules
-    gamemenu.printmenu();
-
     while(gamemenu.getmenuval() != 7) //while 7 (exit number) hasnt been entered
     {
         //print menu
-        // printmenu();
+        gamemenu.printmenu();
+
         switch(gamemenu.getmenuval())
         {
             case 1:
                 //Print off Game Rules
                 gamemenu.printrules();
+                break;
+
             case 2:
                 //Play new game
                 gamemenu.filllist(gamemenu.getcommandslist()); //fills commands list
@@ -59,17 +60,20 @@ int main(void)
                 //load previous game
                 gamemenu.filllist(gamemenu.getuserlist()); //fills user list
                 //play game
-
+                break;
             case 4:
                 //add command 
+                break;
             case 5:
                 //remove command
+                break;
             case 6:
                 //print commands list
                 gamemenu.printlist(gamemenu.getcommandslist());
+                break;
             case 7:
                 //save and exit
-                return 0;
+                break;
             
             default:
                 cout << "Valid menu value not entered, try again" << endl;
