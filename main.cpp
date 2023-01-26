@@ -20,6 +20,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <iostream>
+#include <stdlib.h>
 
 //file inclusions
 #include "data.hpp"
@@ -35,6 +36,7 @@ using std::ofstream;
 
 //menu game + file variables
 Game gamemenu;
+string playername;
 
 
 int main(void)
@@ -54,12 +56,20 @@ int main(void)
             case 2:
                 //Play new game
                 gamemenu.filllist(gamemenu.getcommandslist()); //fills commands list
+                gamemenu.printlist(gamemenu.getcommandslist());
                 //play game
                 
             case 3:
                 //load previous game
+                //get user name
+                cout << "What is your name? ";
+                std::cin >> playername;
+
                 gamemenu.filllist(gamemenu.getuserlist()); //fills user list
+                gamemenu.setpts(gamemenu.findplayer(playername));
+                cout << "Game loaded, ready to play (1)" << endl;
                 //play game
+
                 break;
             case 4:
                 //add command 
@@ -72,7 +82,10 @@ int main(void)
                 gamemenu.printlist(gamemenu.getcommandslist());
                 break;
             case 7:
-                //save and exit
+                //update game and player lists
+                gamemenu.updatelist(gamemenu.getcommandslist());
+                gamemenu.updatelist(gamemenu.getuserlist());
+                //exit
                 break;
             
             default:

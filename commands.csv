@@ -27,4 +27,4 @@ find, locates files based on some user-specified criteria and prints the pathnam
 clear, bring the command line on top of the computer terminal ,3
 diff, compare two files line by line and display the difference between them ,3
 env, print a list of the current environment variables ,3
-free, outputs a summary of RAM usage, including total, used, free, shared, and available memory ,3
+free, outputs a summary of RAM usage including total used free shared and available memory ,3

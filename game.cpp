@@ -1,6 +1,9 @@
 
 #include "game.hpp"
 
+#include <fstream>
+#include <stdlib.h>
+
 using std::cout;
 using std::endl;
 using std::cin;
@@ -17,8 +20,6 @@ Game::~Game()
 
 void Game::printmenu()
 {
-    system("cls");
-    system("pause");
     cout << "**** Welcome to the Linux Command Quiz!" << endl;
     cout << "1. Print Rules" << endl;
     cout << "2. Play New Game" << endl;
@@ -32,7 +33,6 @@ void Game::printmenu()
 
 void Game::printrules()
 {
-    system("cls");
     cout << "**** Game Rules ****" << endl;
     cout << "1. Each round you will be presented with a multiple choice question" << endl;
     cout << "Each question will ask for the purpose or results of a terminal command for linux (mint)" << endl;
@@ -56,7 +56,9 @@ void Game::printlist(List<Data> list)
 
 void Game::filllist(List<Data> list) //will pull in lines and put them into a data var and insert until no lines
 {
-    this -> infile.open("commands.csv");
+
+    this -> infile.open("commands.csv", std::ios::in);
+
     Data tempdata;
     string tempstring;
     string token;
@@ -85,5 +87,51 @@ void Game::filllist(List<Data> list) //will pull in lines and put them into a da
 
             this -> commandslist.insert(tempdata);
         }
+
+
+      this -> infile.close();
     }
 }
+void Game::updatelist(List<Data> list)
+{
+    //open commands file to write
+    this -> infile.open("commands.csv", std::ios::out);
+
+    //initialize a pCur tracking variable
+    Node<Data>* pCur = list.getpHead();
+
+    //loop through list while writting commands to file
+    while(pCur != nullptr)
+    {
+        this -> infile << pCur -> getdata();
+
+        pCur = pCur -> getpnext();
+    }
+    this -> infile.close();
+}
+int Game::findplayer(string name)
+  {
+    //initialize variables for pCur and tempdata
+    Node<Data>* pCur = this -> userlist.getpHead(); //set pCur to head
+    Data tempdata;
+    int success= 0;
+
+    while(pCur != nullptr) //cycles through list of player modules
+    {
+        tempdata = pCur -> getdata(); //sets tempdata to the pCur data 
+
+        if(tempdata.getanswer() == name) //if the name matches parameter, set game poitns to points
+        {
+            this -> pts = tempdata.getpoints();
+            success = 1;
+        }
+    }
+    if(success == 1)
+    {
+
+    }
+    else
+    {
+        cout << "Could not find user, poitns set to zero" << endl;
+    }
+  }
