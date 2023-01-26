@@ -66,16 +66,17 @@ int main(void)
                 std::cin >> playername;
 
                 gamemenu.filllist(gamemenu.getuserlist()); //fills user list
-                gamemenu.setpts(gamemenu.findplayer(playername));
-                cout << "Game loaded, ready to play (1)" << endl;
+                gamemenu.setpts(gamemenu.findplayer(playername)); //
                 //play game
 
                 break;
             case 4:
-                //add command 
+                //add command
+                gamemenu.addcommand();
                 break;
             case 5:
                 //remove command
+                gamemenu.removecommand();
                 break;
             case 6:
                 //print commands list

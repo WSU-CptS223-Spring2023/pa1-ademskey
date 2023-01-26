@@ -103,8 +103,9 @@ void Game::updatelist(List<Data> list)
     //loop through list while writting commands to file
     while(pCur != nullptr)
     {
+        //overwrite data useing overloaded operator into file
         this -> infile << pCur -> getdata();
-
+        //incrament pCur
         pCur = pCur -> getpnext();
     }
     this -> infile.close();
@@ -128,10 +129,110 @@ int Game::findplayer(string name)
     }
     if(success == 1)
     {
-
+        cout << "User found, loading points" << endl;
     }
     else
     {
-        cout << "Could not find user, poitns set to zero" << endl;
+        cout << "Could not find user, points set to zero" << endl;
     }
   }
+
+//finds command in linked list and removes it
+void Game::removecommand()
+{
+    //initialize node tracking variables
+    Node<Data>* pCur = this -> commandslist.getpHead();
+    Node<Data>* pPrev = nullptr;
+
+    //initialize variables for storing command and data
+    int success = 0;
+    string command;
+    Data tempdata;
+
+    //get command to be removed from user
+    cout << "Enter command to remove: ";
+    std::cin >> command;
+
+    while(pCur != nullptr) //while nodes exist
+    {
+        tempdata = pCur -> getdata(); //set tempdata to current's data
+
+        if (tempdata.getcommand() == command) //iff command matches
+        {
+            pPrev -> setpNext(pCur -> getpnext()); //set previous next to current next.
+            delete pCur; //frees information stored in pCur
+            pCur = pPrev -> getpnext(); //setts current to previous's next
+            success = 1;
+        }
+        else //if command doesnt match
+        {
+            //incrament trackers
+            pCur = pCur -> getpnext();
+            pPrev = pCur;
+        }
+    }
+}
+
+//gets info and inserts a node with new command 
+void Game::addcommand()
+{
+    //initialize variables to put in data
+    string command, answer;
+    int points;
+    Data tempdata;
+
+    //get relevant user input
+    cout << "Enter command to be saved: ";
+    cin >> command;
+    cout << "Enter command function: ";
+    cin >> answer;
+    cout << "Enter ammount of points command is worth:";
+    cin >> points;
+    
+    //insert data into list
+    this -> commandslist.insert(tempdata);
+
+    cout << "Command added!" << endl;
+}
+
+//finds number of nodes in linked list
+int Game::size()
+{
+    Node<Data>* pCur = this -> commandslist.getpHead();
+    int counter;
+
+    while(pCur != nullptr)
+    {
+        counter++;
+    }
+}
+
+void Game::playgame()
+{
+    //initialize node variables, data, and tracking integers
+    Node<Data>* pCur = this -> commandslist.getpHead();
+    Data tempdata;
+    int numrounds, random; 
+    int sizelist =  size();
+
+    //seed rand
+    srand(time(0));
+
+    //get number of rounds that player would like to play
+    cout << "Enter number of rounds you would like to play: ";
+    cin >> numrounds;
+
+    for(int i = 0; i <= numrounds; i++)
+    {
+        random = rand() % sizelist;
+        tempdata = pCur -> getdata();
+
+        cout << "What does the function " << tempdata.getcommand() << "do?";
+        cout << "A: " << endl;
+        cout << "b: " << endl;
+        cout << "c: " << endl;
+        cout << "d: " << endl;
+
+        pCur = pCur -> getpnext();
+    }
+}
