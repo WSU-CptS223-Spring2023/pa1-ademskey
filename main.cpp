@@ -36,15 +36,28 @@ using std::ofstream;
 
 //menu game + file variables
 Game gamemenu;
-string playername;
+int switchvar;
+string playername, lastname;
+List<Data> commandslist;
+List<Data> userlist;
 
 
 int main(void)
 {
+    //fill command and user lists
+    gamemenu.filllist(commandslist, "commands.csv"); //fills commands list
+    gamemenu.filllist(userlist, "profiles.csv"); //fills user list
+
     while(gamemenu.getmenuval() != 7) //while 7 (exit number) hasnt been entered
     {
         //print menu
+        cout << "Press any button to continue" << endl;
+        std::cin.get();
+        system("clear");
+
         gamemenu.printmenu();
+        std::cin >> switchvar;
+        gamemenu.setmenuval(switchvar);
 
         switch(gamemenu.getmenuval())
         {
@@ -55,38 +68,35 @@ int main(void)
 
             case 2:
                 //Play new game
-                gamemenu.filllist(gamemenu.getcommandslist()); //fills commands list
-                gamemenu.printlist(gamemenu.getcommandslist());
-                gamemenu.playgame();
+                gamemenu.adduser(userlist);
+                gamemenu.playgame(commandslist);
                 break;
                 
             case 3:
                 //load previous game
-                //get user name
-                cout << "What is your name? ";
+                cout << "What is your name? "; //get user profile name
                 std::cin >> playername;
 
-                gamemenu.filllist(gamemenu.getuserlist()); //fills user list
-                gamemenu.setpts(gamemenu.findplayer(playername)); //
-                //play game
+                gamemenu.setpts(gamemenu.findplayer(playername, userlist)); //sets points after finding player
+                gamemenu.playgame(commandslist); //play game
 
                 break;
             case 4:
                 //add command
-                gamemenu.addcommand();
+                gamemenu.addcommand(commandslist);
                 break;
             case 5:
                 //remove command
-                gamemenu.removecommand();
+                gamemenu.removecommand(commandslist);
                 break;
             case 6:
                 //print commands list
-                gamemenu.printlist(gamemenu.getcommandslist());
+                gamemenu.printlist(commandslist);
                 break;
             case 7:
                 //update game and player lists
-                gamemenu.updatelist(gamemenu.getcommandslist());
-                gamemenu.updatelist(gamemenu.getuserlist());
+                gamemenu.updatelist(commandslist, "commands.csv");
+                gamemenu.updatelist(userlist, "profiles.csv");
                 cout << "Game is exiting" << endl;
                 //game exits
                 break;
