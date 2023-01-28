@@ -57,7 +57,8 @@ int main(void)
                 //Play new game
                 gamemenu.filllist(gamemenu.getcommandslist()); //fills commands list
                 gamemenu.printlist(gamemenu.getcommandslist());
-                //play game
+                gamemenu.playgame();
+                break;
                 
             case 3:
                 //load previous game
@@ -86,7 +87,8 @@ int main(void)
                 //update game and player lists
                 gamemenu.updatelist(gamemenu.getcommandslist());
                 gamemenu.updatelist(gamemenu.getuserlist());
-                //exit
+                cout << "Game is exiting" << endl;
+                //game exits
                 break;
             
             default:

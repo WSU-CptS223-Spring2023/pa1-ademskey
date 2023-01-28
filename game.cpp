@@ -210,9 +210,9 @@ int Game::size()
 void Game::playgame()
 {
     //initialize node variables, data, and tracking integers
-    Node<Data>* pCur = this -> commandslist.getpHead();
-    Data tempdata;
-    int numrounds, random; 
+    Data answer, wrong1, wrong2, wrong3;
+
+    int numrounds, random1, random2, random3, random4, answernum; 
     int sizelist =  size();
 
     //seed rand
@@ -224,15 +224,66 @@ void Game::playgame()
 
     for(int i = 0; i <= numrounds; i++)
     {
-        random = rand() % sizelist;
-        tempdata = pCur -> getdata();
+        //generate random numbers for choosing questions
+        random1 = rand() % sizelist;
+        random2 = rand() % sizelist;
+        random3 = rand() % sizelist;
+        answernum = rand() % 4;
 
-        cout << "What does the function " << tempdata.getcommand() << "do?";
-        cout << "A: " << endl;
-        cout << "b: " << endl;
-        cout << "c: " << endl;
-        cout << "d: " << endl;
+        //get data for the wrong answers
+        answer = this -> dataindex(answernum);
+        wrong1 = this -> dataindex(random1);
+        wrong2 = this -> dataindex(random2);
+        wrong3 = this -> dataindex(random3);
 
-        pCur = pCur -> getpnext();
+        switch(answernum)
+        {
+            case 1:
+
+                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "A: " << answer.getanswer()<< endl;
+                cout << "b: " << wrong1.getanswer()<< endl;
+                cout << "c: " << wrong2.getanswer() << endl;
+                cout << "d: " << wrong3.getanswer() << endl;
+
+            case 2:
+
+                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "A: " << wrong1.getanswer()<< endl;
+                cout << "b: " << answer.getcommand() << endl;
+                cout << "c: " << wrong2.getanswer()<< endl;
+                cout << "d: " << wrong3.getanswer()<< endl;
+
+            case 3:
+
+                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "A: " << wrong1.getanswer()<< endl;
+                cout << "b: " << wrong2.getanswer()<< endl;
+                cout << "c: " << answer.getcommand() << endl;
+                cout << "d: " << wrong3.getanswer()<< endl;
+
+            case 4:
+
+                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "A: " << wrong1.getanswer()<< endl;
+                cout << "b: " << wrong2.getanswer()<< endl;
+                cout << "c: " << wrong3.getanswer()<< endl;
+                cout << "d: " << answer.getanswer() << endl;
+        }
     }
+}
+
+Data Game::dataindex(int index)
+{
+    Node<Data>* pCur = this -> commandslist.getpHead();
+    Data returndata;
+
+    for (int i = 0; i < index; i++)
+    {
+        if(i == index)
+        {
+            returndata = pCur -> getdata();
+        }
+    }
+    return returndata;
 }
