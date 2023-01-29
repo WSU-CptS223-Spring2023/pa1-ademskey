@@ -64,8 +64,6 @@ int main(void)
             case 1:
                 //Print off Game Rules
                 gamemenu.printrules();
-               // cout << "Press any button to continue" << endl;
-               // std::cin.get();
                 break;
 
             case 2:

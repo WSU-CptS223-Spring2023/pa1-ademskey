@@ -174,7 +174,7 @@ void Game::removecommand(List<Data> &commandslist)
     cout << "Enter command to remove: ";
     getline(cin, command);
 
-    while(pCur != nullptr) //while nodes exist
+    while(pCur->getpnext() != nullptr) //while nodes exist
     {
         tempdata = pCur -> getdata(); //set tempdata to current's data
 
@@ -182,9 +182,8 @@ void Game::removecommand(List<Data> &commandslist)
         {
             pTemp = pCur -> getpnext(); //set temp to next
             pPrev -> setpNext(pTemp); //set previous's next to temp
-            delete pCur; //frees information stored in pCur
             pCur = pTemp;
-          //  pCur = pPrev -> getpnext(); //setts current to previous's next
+            delete pTemp; //frees information stored in pCur
             success = 1;
         }
         else //if command doesnt match
@@ -200,7 +199,6 @@ void Game::removecommand(List<Data> &commandslist)
     else{
         cout << "couldnt find command" << endl;
     }
-    cin.ignore();
     cout << "Press any key to continue" << endl;
     cin.get();
 }
