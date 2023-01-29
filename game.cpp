@@ -27,6 +27,7 @@ void Game::printmenu()
     cout << "5. Remove Command" << endl;
     cout << "6. Display All Commands" << endl;
     cout << "7. Save and Exit" << endl;
+
 }
 
 void Game::printrules()
@@ -38,8 +39,9 @@ void Game::printrules()
     cout << "3. The points for each answer will be listed, if correct will be added to toal. If not will be subtracted" << endl;
     cout << "4. Negative numbers are possible, and answers will be saved under username" << endl;
     cout << "5. Try your best and learn well!" << endl;
-    //cout << "Press any button to continue";
-    //cin.get();
+    cout << "press any button to continue" << endl;
+    cin.get();
+    cin.ignore();
 }
 
 void Game::printlist(List<Data> list)
@@ -53,6 +55,7 @@ void Game::printlist(List<Data> list)
         pCur = pCur -> getpnext();
     }
 
+    cin.ignore();
     std::cout << "Press any button to continue" << endl;
     std::cin.get();
 }
@@ -167,8 +170,9 @@ void Game::removecommand(List<Data> &commandslist)
     Data tempdata;
 
     //get command to be removed from user
+    cin.ignore();
     cout << "Enter command to remove: ";
-    std::cin >> command;
+    getline(cin, command);
 
     while(pCur != nullptr) //while nodes exist
     {
@@ -176,21 +180,12 @@ void Game::removecommand(List<Data> &commandslist)
 
         if (tempdata.getcommand() == command) //if command matches
         {
-            if(pCur -> getpnext() == nullptr) //if list has only one item
-            {
-                delete pCur;
-                commandslist.setpHead(nullptr);
-                pCur = nullptr;
-
-            }
-            else //if list has more than 1 item
-            {
             pTemp = pCur -> getpnext(); //set temp to next
             pPrev -> setpNext(pTemp); //set previous's next to temp
             delete pCur; //frees information stored in pCur
-            pCur = pPrev -> getpnext(); //setts current to previous's next
+            pCur = pTemp;
+          //  pCur = pPrev -> getpnext(); //setts current to previous's next
             success = 1;
-            }
         }
         else //if command doesnt match
         {
@@ -199,6 +194,15 @@ void Game::removecommand(List<Data> &commandslist)
             pPrev = pCur;
         }
     }
+    if(success == 1){
+        cout << "Removed command" << endl;
+    }
+    else{
+        cout << "couldnt find command" << endl;
+    }
+    cin.ignore();
+    cout << "Press any key to continue" << endl;
+    cin.get();
 }
 
 //gets info and inserts a node with new command 
@@ -210,19 +214,24 @@ void Game::addcommand(List<Data> &commandslist)
     Data tempdata;
 
     //get relevant user input
-    cout << "Enter command to be saved: ";
+    cout << "Enter command to be saved (No Spaces): ";
     cin >> command;
+    tempdata.setcommand(command);
+
+    cin.ignore();
     cout << "Enter command function: ";
-    cin >> answer;
+    getline(cin, answer);
+    tempdata.setanswer(answer);
+
     cout << "Enter ammount of points command is worth:";
     cin >> points;
+    tempdata.setpoints(int(points));
+    cout << "\n";
     
     //insert data into list
     commandslist.insert(tempdata);
 
     cout << "Command added!" << endl;
-  //  cout << "press any key to continue" << endl;
-   // std::cin.get();
 }
 
 //finds number of nodes in linked list

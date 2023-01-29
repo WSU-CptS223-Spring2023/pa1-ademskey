@@ -51,9 +51,9 @@ int main(void)
     while(gamemenu.getmenuval() != 7) //while 7 (exit number) hasnt been entered
     {
         //print menu
-        cout << "Press any button to continue" << endl;
-        std::cin.get();
-        system("clear");
+        //cout << "Press any button to continue" << endl;
+        //std::cin.get();
+        //system("clear");
 
         gamemenu.printmenu();
         std::cin >> switchvar;
@@ -64,6 +64,8 @@ int main(void)
             case 1:
                 //Print off Game Rules
                 gamemenu.printrules();
+               // cout << "Press any button to continue" << endl;
+               // std::cin.get();
                 break;
 
             case 2:
