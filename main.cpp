@@ -28,6 +28,7 @@
 #include "node.hpp"
 #include "list.hpp"
 #include "game.hpp"
+#include "profiles.hpp"
 
 //using statements
 using std::cout;
@@ -40,21 +41,17 @@ Game gamemenu;
 int switchvar;
 string playername, lastname;
 List<Data> commandslist;
-List<Data> userlist;
+Profile userlist[30];
 
 
 int main(void)
 {
     //fill command and user lists
     gamemenu.filllist(commandslist, "commands.csv"); //fills commands list
-    gamemenu.filllist(userlist, "profiles.csv"); //fills user list
+    gamemenu.fillprofiles(userlist, "profiles.csv");
 
     while(gamemenu.getmenuval() != 7) //while 7 (exit number) hasnt been entered
     {
-        //print menu
-        //cout << "Press any button to continue" << endl;
-        //std::cin.get();
-        //system("clear");
 
         gamemenu.printmenu();
         std::cin >> switchvar;
@@ -62,7 +59,7 @@ int main(void)
 
         switch(gamemenu.getmenuval())
         {
-            case 1:
+            case 1: //working
                 //Print off Game Rules
                 gamemenu.printrules();
                 break;
@@ -86,23 +83,26 @@ int main(void)
                 //add command
                 gamemenu.addcommand(commandslist);
                 break;
+
             case 5:
                 //remove command
                 gamemenu.removecommand(commandslist);
                 break;
-            case 6:
+
+            case 6: //working
                 //print commands list
                 gamemenu.printlist(commandslist);
                 break;
+
             case 7:
                 //update game and player lists
                 gamemenu.updatelist(commandslist, "commands.csv");
-                gamemenu.updatelist(userlist, "profiles.csv");
+                gamemenu.updateprofiles(userlist, "profiles.csv");
                 cout << "Game is exiting" << endl;
                 //game exits
                 break;
             
-            default:
+            default: //working
                 cout << "Valid menu value not entered, try again" << endl;
                 break;
         }

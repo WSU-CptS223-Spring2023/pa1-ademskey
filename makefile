@@ -5,10 +5,10 @@
 prog: main.o game.o  data.o
 	g++ -g main.o game.o data.o -o ourProg
 
-main.o: main.cpp node.hpp game.cpp list.hpp data.cpp
+main.o: main.cpp node.hpp game.cpp list.hpp data.cpp profiles.hpp
 	g++ -g -c main.cpp
 
-game.o: game.cpp game.hpp list.hpp data.hpp
+game.o: game.cpp game.hpp list.hpp data.hpp profiles.hpp
 	g++ -g -c game.cpp 
 
 data.o: data.cpp data.hpp list.hpp
