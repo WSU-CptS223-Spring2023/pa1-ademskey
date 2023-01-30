@@ -8,6 +8,7 @@
 // Date Last Edited 1/13/2023
 
 // **** Linked List Advantages / Disadvantages **** 
+
 // The advantages of linked lists is that they are dynamic and very versitile. When you are
 // unsure of how much data you need to store linked list impleentation is incredibly useful to avoid
 // the limitations / memory problems of other containers. 
@@ -103,6 +104,7 @@ int main(void)
             
             default:
                 cout << "Valid menu value not entered, try again" << endl;
+                break;
         }
     }
     return 0; //return zero if main has executed succesfully

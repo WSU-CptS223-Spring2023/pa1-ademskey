@@ -6,16 +6,19 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+//game constructor
 Game::Game(int input)
 { 
     this -> menuval = input;
 }
 
+//game destructor
 Game::~Game()
 {
     //inside destructor
 }
 
+//prints game menu
 void Game::printmenu()
 {
     system("clear");
@@ -30,6 +33,7 @@ void Game::printmenu()
 
 }
 
+//prints game rules
 void Game::printrules()
 {
     system("clear");
@@ -44,6 +48,7 @@ void Game::printrules()
     cin.ignore();
 }
 
+//prints the contents of a list
 void Game::printlist(List<Data> list)
 {
     Node<Data>* pCur = list.getpHead();
@@ -60,6 +65,7 @@ void Game::printlist(List<Data> list)
     std::cin.get();
 }
 
+//fills a linked list based on a file passed into it
 void Game::filllist(List<Data> &list, string file) //will pull in lines and put them into a data var and insert until no lines
 {
     this -> infile.open(file, std::ios::in);
@@ -97,6 +103,8 @@ void Game::filllist(List<Data> &list, string file) //will pull in lines and put 
       this -> infile.close();
     }
 }
+
+//updates the files accociated with the list based on a filename passed in
 void Game::updatelist(List<Data> list, string file)
 {
     //open commands file to write
@@ -128,6 +136,8 @@ void Game::updatelist(List<Data> list, string file)
         this -> infile.close(); //close infile
     }
 }
+
+//finds a player in a linked list and returns a integer representing success
 int Game::findplayer(string name, List<Data> &userlist)
   {
     //initialize variables for pCur and tempdata
@@ -235,14 +245,18 @@ void Game::addcommand(List<Data> &commandslist)
 //finds number of nodes in linked list
 int Game::size(List<Data> &commandslist)
 {
+    //initialize tracking information
     Node<Data>* pCur = commandslist.getpHead();
-    int counter;
+    int counter = 0;
 
-    while(pCur != nullptr)
+    //circle through the list until a nullptr is detected
+    while(pCur -> getpnext() != nullptr)
     {
-        counter++;
+        counter++; //incrament pNext
+        pCur = pCur -> getpnext(); //incrament pCur
     }
-    return counter;
+
+    return counter; //return the ammount of nodes in the list
 }
 
 void Game::playgame(List<Data> &commandslist)
@@ -250,8 +264,9 @@ void Game::playgame(List<Data> &commandslist)
     //initialize node variables, data, and tracking integers
     Data answer, wrong1, wrong2, wrong3;
     char playeranswer;
-    int numrounds, random1, random2, random3, random4, answernum, answernode; 
+    int numrounds, random1, random2, random3, random4, answernum, answernode, indexes_tracker; 
     int sizelist =  size(commandslist);
+    int indexes[50] = {};
 
     //seed rand
     srand(time(0));
@@ -261,13 +276,13 @@ void Game::playgame(List<Data> &commandslist)
     cin >> numrounds;
 
     // get questions for the number of rounds player has requested
-    for(int i = 0; i <= numrounds; i++)
+    for(int i = 0; i < numrounds; i++)
     {
         //generate random numbers for choosing questions
         random1 = rand() % sizelist;
         random2 = rand() % sizelist;
         answernode = rand() % sizelist;
-        answernum = rand() % 4;
+        answernum = rand() % 3;
 
         //get data for the wrong answers
         answer = this -> dataindex(answernode, commandslist);
@@ -275,15 +290,16 @@ void Game::playgame(List<Data> &commandslist)
         wrong2 = this -> dataindex(random2, commandslist);
 
         //print points to the user
-        std::cout << "****************************************" << endl;
+        std::cout << "\n***********************************************" << endl;
         std::cout << "Player Current points: " << this -> pts << endl;
+        std::cout << "\n***********************************************" << endl;
 
         //ask question with answer position based o
         switch(answernum)
         {
             case 1:
 
-                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "What does the function " << answer.getcommand() << "do?" << endl;
                 cout << "A: " << answer.getanswer()<< endl;
                 cout << "b: " << wrong1.getanswer()<< endl;
                 cout << "c: " << wrong2.getanswer() << endl;
@@ -291,7 +307,7 @@ void Game::playgame(List<Data> &commandslist)
                 std::cin >> playeranswer;
                 if(playeranswer == 'a' || playeranswer == 'A')
                 {
-                    cout << "You are correct, " << answer.getpoints() << "has been added to your score" << endl;
+                    cout << "You are correct, " << answer.getpoints() << " points have been added to your score" << endl;
                     this -> pts += answer.getpoints();
                     cout << "You now have " << answer.getpoints() << "points" << endl;
                 }
@@ -301,59 +317,60 @@ void Game::playgame(List<Data> &commandslist)
                     this -> pts -= answer.getpoints();
                     cout << "You now have " << answer.getpoints() << "points" << endl;
                 }
-                cout << "Press any key to continue " << endl;
-                std::cin.get();
-                system("clear");
+                break;
 
             case 2:
 
-                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "What does the function " << answer.getcommand() << " do?" << endl;
                 cout << "A: " << wrong1.getanswer()<< endl;
-                cout << "b: " << answer.getcommand() << endl;
+                cout << "b: " << answer.getanswer() << endl;
                 cout << "c: " << wrong2.getanswer()<< endl;
 
                 std::cin >> playeranswer;
                 if(playeranswer == 'b' || playeranswer == 'B')
                 {
-                    cout << "You are correct, " << answer.getpoints() << "has been added to your score" << endl;
+                    cout << "You are correct, " << answer.getpoints() << " has been added to your score" << endl;
                     this -> pts += answer.getpoints();
-                    cout << "You now have " << answer.getpoints() << "points" << endl;
+                    cout << "You now have " << answer.getpoints() << " points" << endl;
                 }
                 else
                 {
-                    cout << "You were incoreect, " << answer.getpoints() << "has been subtracted" << endl;
+                    cout << "You were incoreect, " << answer.getpoints() << " has been subtracted" << endl;
                     this -> pts -= answer.getpoints();
-                    cout << "You now have " << answer.getpoints() << "points" << endl;
+                    cout << "You now have " << answer.getpoints() << " points" << endl;
                 }
-                cout << "Press any key to continue " << endl;
-                std::cin.get();
-                system("clear");
+                break;
 
             case 3:
 
-                cout << "What does the function " << answer.getcommand() << "do?";
+                cout << "What does the function " << answer.getcommand() << " do?" << endl;
                 cout << "A: " << wrong1.getanswer()<< endl;
                 cout << "b: " << wrong2.getanswer()<< endl;
-                cout << "c: " << answer.getcommand() << endl;
+                cout << "c: " << answer.getanswer() << endl;
 
                 std::cin >> playeranswer;
                 if(playeranswer == 'c' || playeranswer == 'C')
                 {
-                    cout << "You are correct, " << answer.getpoints() << "has been added to your score" << endl;
+                    cout << "You are correct, " << answer.getpoints() << " has been added to your score" << endl;
                     this -> pts += answer.getpoints();
-                    cout << "You now have " << answer.getpoints() << "points" << endl;
+                    cout << "You now have " << answer.getpoints() << " points" << endl;
                 }
                 else
                 {
-                    cout << "You were incoreect, " << answer.getpoints() << "has been subtracted" << endl;
+                    cout << "You were incoreect, " << answer.getpoints() << " has been subtracted" << endl;
                     this -> pts -= answer.getpoints();
-                    cout << "You now have " << answer.getpoints() << "points" << endl;
+                    cout << "You now have " << answer.getpoints() << " points" << endl;
                 }
-                cout << "Press any key to continue " << endl;
-                std::cin.get();
-                system("clear");
+                break;
+
+            default:
+                cout << "Something went wrong, computer error" << endl;
+                break;
         }
     }
+    cout << "Game has ended, score will be updated for profile when save and exit is selected" << endl;
+    cout << "Press any button to continue" << endl;
+    cin.get();
 }
 
 Data Game::dataindex(int index, List<Data> &commandslist)
@@ -361,11 +378,19 @@ Data Game::dataindex(int index, List<Data> &commandslist)
     Node<Data>* pCur = commandslist.getpHead();
     Data returndata;
 
-    for (int i = 0; i < index; i++)
+    if(pCur -> getpnext())
     {
-        if(i == index)
+        for (int i = 0; i <= index; i++)
         {
-            returndata = pCur -> getdata();
+            if(i == index)
+            {
+                returndata = pCur -> getdata();
+                pCur = pCur -> getpnext(); //incrament pCur
+            }
+            else
+            {
+                pCur = pCur -> getpnext(); //incrament pCur
+            }
         }
     }
     return returndata;
@@ -383,8 +408,7 @@ void Game::adduser(List<Data> &userlist)
     std::cin >> lastname;
 
     //create data with information
-    Data newplayer(playername, lastname, 0);
+    Data newplayer(lastname, playername, 0);
     userlist.insert(newplayer);
-
 
 }
