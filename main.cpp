@@ -7,15 +7,25 @@
 // Postconditions: None
 // Date Last Edited 1/13/2023
 
-// **** Linked List Advantages / Disadvantages **** 
+// **** Linked List Advantages / Disadvantages ++ Array Advantages / disadvantages**** 
 
 // The advantages of linked lists is that they are dynamic and very versitile. When you are
 // unsure of how much data you need to store linked list impleentation is incredibly useful to avoid
-// the limitations / memory problems of other containers. 
+// the limitations / memory problems of other containers. because there is not a lmited ammount of commands which 
+// using an array which is not desireable thus a list was used.
 
 // The disadvantages of linked lists is that they are not always the most efficient for data storage and can 
 // run into time complexity problems when searching through them for specific data. This means while they
-// are versitile that they should only be used in the correct circumstances to avoid inneficient code.
+// are versitile that they should only be used in the correct circumstances to avoid inneficient code. i
+//since there is likely to not be a large ammount of profiles it was more efficent to use an array.
+
+
+//The advantages of Arrays are instand (constant time) indexing and more efficency for smaller data groups
+//for instance since there is likely to not be a large ammount of profiles it was more efficent to use an array.
+
+//The disadvantages of arrays is that their size is set so you can run into memory issues easily as well as being rigid
+//making them useful in specific senarios. for example this assignment would have a limited ammount of commands which 
+//if using an array which is not desireable thus a list was used.
 
 //std inclusions
 #include <fstream>
@@ -38,7 +48,7 @@ using std::ofstream;
 
 //menu game + file variables
 Game gamemenu;
-int switchvar;
+int switchvar, playerindex, playerpoints;
 string playername, lastname;
 List<Data> commandslist;
 Profile userlist[30];
@@ -67,7 +77,7 @@ int main(void)
             case 2:
                 //Play new game
                 gamemenu.adduser(userlist);
-                gamemenu.playgame(commandslist);
+                playerpoints = gamemenu.playgame(commandslist);
                 break;
                 
             case 3:
@@ -75,9 +85,11 @@ int main(void)
                 cout << "What is your name? "; //get user profile name
                 std::cin >> playername;
 
-                gamemenu.setpts(gamemenu.findplayer(playername, userlist)); //sets points after finding player
-                gamemenu.playgame(commandslist); //play game
-
+                playerindex = gamemenu.findplayer(playername, userlist); //find index of player
+                gamemenu.setpts(userlist[playerindex].getpoints()); //sets points after finding player
+                
+                playerpoints = gamemenu.playgame(commandslist); //play game and return points
+                userlist[playerindex].setpoints(playerpoints); //set points
                 break;
             case 4:
                 //add command

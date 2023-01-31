@@ -49,20 +49,23 @@ void Game::printrules()
 }
 
 //prints the contents of a list
-void Game::printlist(List<Data> list)
+void Game::printlist(List<Data> &list)
 {
     Node<Data>* pCur = list.getpHead();
 
-    while(pCur != nullptr)
+    if(pCur != nullptr) //if pcur isnt null
     {
+        while(pCur -> getpnext() != nullptr) //while not last node
+        {
 
-        cout << pCur -> getdata() << endl;;
-        pCur = pCur -> getpnext();
+            cout << pCur -> getdata() << endl;
+            pCur = pCur -> getpnext();
+        }
+
+        cin.ignore();
+        std::cout << "Press any button to continue" << endl;
+        std::cin.get();
     }
-
-    cin.ignore();
-    std::cout << "Press any button to continue" << endl;
-    std::cin.get();
 }
 
 //fills a linked list based on a file passed into it
@@ -144,7 +147,7 @@ void Game::fillprofiles(Profile profiles[30], string file)
 }
 
 //updates the files accociated with the list based on a filename passed in
-void Game::updatelist(List<Data> list, string file)
+void Game::updatelist(List<Data> &list, string file)
 {
     //open commands file to write
     this -> infile.open(file, std::ios::out);
@@ -186,7 +189,7 @@ void Game::updateprofiles(Profile profiles[30], string file)
     if(this -> infile.is_open())
     {
         //loop through list while writting commands to file
-         while(i != 30 || profiles[i].getname() == "No input")
+         while(i < 30)
         {
             //overwrite data useing overloaded operator into file
             infile << profiles[i].getlast();
@@ -202,23 +205,25 @@ void Game::updateprofiles(Profile profiles[30], string file)
     }
 }
 
-//finds a player in a linked list and returns a integer representing success
+//finds a player in a linked list and returns a integer representing their points
 int Game::findplayer(string name, Profile userlist[30])
   {
     //initialize variables for pCur and tempdata
     int i = 0;
-    int success= 0;
+    bool success= false;
+    int returnval = 0;
 
-    while(i < 30 && success == 0) //cycles through list of player modules
+    while(i < 30 && success == false) //cycles through list of player modules
     {
         if(userlist[i].getname() == name) //if the name matches parameter, set game poitns to points
         {
             this -> pts = userlist[i].getpoints();
-            success = i;
+            returnval = i;
+            success = true;
         }
         i++;
     }
-    if(success != 0)
+    if(success != false )
     {
         cout << "User found, loading points" << endl;
     }
@@ -226,7 +231,7 @@ int Game::findplayer(string name, Profile userlist[30])
     {
         cout << "Could not find user, points set to zero" << endl;
     }
-    return userlist[i].getpoints();
+    return i;
   }
 
 //finds command in linked list and removes it
@@ -253,12 +258,12 @@ void Game::removecommand(List<Data> &commandslist)
 
         if (tempdata.getcommand() == command) //if command matches
         {
-            if(pCur == commandslist.getpHead()) //if first node
+            if(pPrev == nullptr) //if top of list, reset head
             {
-                pTemp = pCur -> getpnext(); //set temp to next
-                pPrev -> setpNext(pTemp); //set previous's next to temp
-                pCur = pTemp;
-                delete pTemp; //frees information stored in pCur
+                pTemp = pCur;
+                pCur = pCur -> getpnext();
+                commandslist.setpHead(pCur);
+                delete pTemp;
                 success = 1;
             }
             else //if not first node
@@ -277,6 +282,7 @@ void Game::removecommand(List<Data> &commandslist)
             pPrev = pCur;
         }
     }
+    
     if(success == 1){
         cout << "Removed command" << endl;
     }
@@ -294,9 +300,11 @@ int Game::checkcommands(List<Data> &commandslist, string command)
     Data tempdata;
     int success = 1;
 
-    while(pCur -> getpnext())
+    if(commandslist.getpHead() != nullptr)
     {
-        tempdata = pCur ->getdata();
+        while(pCur -> getpnext())
+        {
+            tempdata = pCur ->getdata();
             if(command == tempdata.getcommand())
             {
                 success = 0;
@@ -306,6 +314,7 @@ int Game::checkcommands(List<Data> &commandslist, string command)
             {
                 pCur = pCur -> getpnext(); //incrament pCur
             }
+         }
     }
     return success;
 }
@@ -361,30 +370,34 @@ int Game::size(List<Data> &commandslist)
     Node<Data>* pCur = commandslist.getpHead();
     int counter = 0;
 
-    //circle through the list until a nullptr is detected
-    while(pCur -> getpnext() != nullptr)
+    if(pCur != nullptr)
     {
-        counter++; //incrament pNext
-        pCur = pCur -> getpnext(); //incrament pCur
+         //circle through the list until a nullptr is detected
+         while(pCur -> getpnext() != nullptr)
+        {
+            counter++; //incrament pNext
+             pCur = pCur -> getpnext(); //incrament pCur
+         }
     }
 
     return counter; //return the ammount of nodes in the list
 }
 
-void Game::playgame(List<Data> &commandslist)
+int Game::playgame(List<Data> &commandslist)
 {
     //initialize node variables, data, and tracking integers
     Data answer, wrong1, wrong2, wrong3;
     char playeranswer;
     int numrounds, random1, random2, random3, random4, answernum, answernode, indexes_tracker; 
     int sizelist =  size(commandslist);
-    int indexes[50] = {};
+    int indexes[50] = {}, usedcommandindex = 0;
+    bool unique = false;
 
     //seed rand
     srand(time(0));
 
     //get number of rounds that player would like to play
-    cout << "Enter number of rounds you would like to play: ";
+    cout << "Enter number of rounds you would like to play (5-30): ";
     cin >> numrounds;
 
     // get questions for the number of rounds player has requested
@@ -395,6 +408,23 @@ void Game::playgame(List<Data> &commandslist)
         random2 = (rand() % sizelist) + 1;
         answernode = (rand() % sizelist) + 1;
         answernum = (rand() % 3) + 1;
+
+        //while loop to make shure a single index is not repeated more than once
+        //starts out as true but if a unique index is found then set to true
+        
+        while(unique == false) //while a unique index hasnt been found
+        {
+            unique = true; //sets to true and if a copy found set to false
+
+            for(int i = 0; i < usedcommandindex; i++)
+            {
+                if(answernode == indexes[i])
+                {
+                    unique = false; //if a identical value found set to false
+                    answernode = (rand() % sizelist) + 1;
+                }
+            }
+        }
 
         //get data for the wrong answers
         answer = this -> dataindex(answernode, commandslist);
@@ -479,12 +509,14 @@ void Game::playgame(List<Data> &commandslist)
                 cout << "Something went wrong, computer error" << endl;
                 break;
         }
+        usedcommandindex ++;
     }
     cin.ignore();
     cout << "\n";
     cout << "Game has ended, score will be updated for profile when save and exit is selected" << endl;
     cout << "Press any button to continue" << endl;
     cin.get();
+    return pts;
 }
 
 Data Game::dataindex(int index, List<Data> &commandslist)
@@ -492,20 +524,23 @@ Data Game::dataindex(int index, List<Data> &commandslist)
     Node<Data>* pCur = commandslist.getpHead();
     Data returndata;
 
-    if(pCur -> getpnext())
+    if(pCur != nullptr)
     {
-        for (int i = 0; i <= index; i++)
+    if(pCur -> getpnext())
         {
-            if(i == index)
+            for (int i = 0; i <= index; i++)
             {
+                if(i == index)
+                {
                 returndata = pCur -> getdata();
                 pCur = pCur -> getpnext(); //incrament pCur
-            }
-            else
-            {
-                pCur = pCur -> getpnext(); //incrament pCur
-            }
-        }
+                }
+                else
+                {
+                 pCur = pCur -> getpnext(); //incrament pCur
+                 }
+             }
+         }
     }
     return returndata;
 }
@@ -514,7 +549,7 @@ void Game::adduser(Profile userlist[])
 {
     //initialize name variables
     string playername, lastname;
-    int i = 0, success = 1;
+    int i = 0, success = 0;
 
     //get full name
     cout << "Enter first name" << endl;
@@ -526,7 +561,7 @@ void Game::adduser(Profile userlist[])
     //create data with information
     Profile newplayer(lastname, playername, 0);
     
-    while (i < 30 || success != 1) //cycles through until i=30 or empty round
+    while (i < 30 && success != 1) //cycles through until i=30 or empty round
     {
         if(userlist[i].getname() == "No input") //chekcs if default initialization
             {

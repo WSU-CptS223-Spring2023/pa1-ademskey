@@ -1,0 +1,30 @@
+free,Prints out a summary of RAM usage,3
+env,Can be used to print out enviorment variables,4
+diff,Finds the difference between two files,2
+clear,Clears the terminal,1
+find,Helps the user locate a file by searching through a given directory,4
+echo,Repeats a message sent into the terminal,2
+grep,Filers through a file to search for a set of characters,3
+df,Checks disk usage for the system,3
+chown,used to manage a file's ownership,3
+alias,Creates a user define instruction to help with productivity,3
+cat,Reads data from a file and shows the content of the file,3
+chmod,Change mode,3
+who,Shows info on current users on the system,3
+top,Shows liniux processes,2
+kill,Terminate a process,2
+ps,Process selection,2
+make,Linux compiler to build an executable file,2
+gcc,GNU Compiler Collection,2
+g++,GNU c++ compiler,2
+man,Manual,2
+scp, Secure copy protocol,2
+ssh,Secure Shell,2
+mv,Move a file,1
+cp,Copy,1
+rm,Delete a file,1
+rmdir,Delete a directory,1
+mkdir,Create a directory,1
+cd,Change current working directory,1
+ls,List files and directories in current working directory,1
+tail,displays tail end of a text file,1
